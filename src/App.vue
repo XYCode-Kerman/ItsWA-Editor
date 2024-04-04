@@ -1,30 +1,20 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+    <div class="navbar bg-base-100 shadow-lg">
+        <div class="flex-1">
+            <button class="btn btn-ghost"> ItsWA Manager </button>
+        </div>
+
+        <div class="gap-2.5">
+            <router-link to="/" class="btn btn-ghost text-lg">首页</router-link>
+            <router-link to="/about" class="btn btn-ghost text-lg">关于</router-link>
+        </div>
+    </div>
+
+    <router-view/>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.router-link-exact-active {
+    @apply btn-active;
 }
 </style>
