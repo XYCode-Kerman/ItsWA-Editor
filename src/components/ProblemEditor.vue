@@ -29,6 +29,10 @@
                 <textarea type="text" v-model="problem.output_format"></textarea>
             </div>
 
+            <button @click="$emit('delete')" class="col-span-2 btn btn-outline btn-error text-2xl">
+                删除题目
+            </button>
+
             <!-- 评测姬配置 -->
             <div class="divider col-span-2">评测姬配置</div>
 

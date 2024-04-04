@@ -56,7 +56,17 @@
                     </div>
 
                     <div class="collapse-content">
-                        <ProblemEditor v-model="problems[index]" />
+                        <ProblemEditor @delete="async () => {
+                const result = await Swal.fire({
+                    title: '您确定要删除该题吗？',
+                    icon: 'warning',
+                    showCancelButton: true
+                })
+
+                if (result.isConfirmed) {
+                    problems.splice(index, 1)
+                }
+            }" v-model="problems[index]" />
                     </div>
                 </div>
 
