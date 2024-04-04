@@ -72,6 +72,7 @@
                         <th>输出方式</th>
                         <th>输入文件</th>
                         <th>输出文件</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -103,6 +104,13 @@
                         <td v-if="item.output_type == 'FILE'"><input type="text" class="input w-32"
                                 v-model="item.output_file" /></td>
                         <td v-else class="cursor-not-allowed text-error font-bold">不可修改</td>
+
+                        <!-- 删除 -->
+                        <td>
+                            <button @click="() => {
+                    problem.judge_config.checkpoints.splice(index, 1)
+                }" class="btn btn-warning btn-sm">删除</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
