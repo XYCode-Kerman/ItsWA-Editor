@@ -21,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/contest/add',
     name: 'AddContest',
     component: () => import('../views/AddContest.vue')
+  },
+  {
+    path: '/contest/judge',
+    name: 'JudgeView',
+    component: () => import('../views/JudgeView.vue')
   }
 ]
 

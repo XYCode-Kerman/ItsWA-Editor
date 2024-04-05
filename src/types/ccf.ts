@@ -1,6 +1,7 @@
 export type Language = 'CPP' | 'C'
 export type InputType = 'STDIN' | 'FILE'
 export type OutputType = 'STDOUT' | 'FILE'
+export type Status = 'AC' | 'WA' | 'CE' | 'RE' | 'TLE'
 
 export interface Checkpoint {
     input: string,

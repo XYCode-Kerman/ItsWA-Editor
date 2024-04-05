@@ -8,8 +8,13 @@
 
                     <div class="card-actions justify-end">
                         <RouterLink :to="'/editor?ccf_file=' + contest.ccf_file + '/ccf.json'"
-                            class="btn btn-square shadow-inner btn-base-300 text-base w-1/3">
+                            class="btn btn-square shadow-inner text-base w-1/3">
                             编辑
+                        </RouterLink>
+
+                        <RouterLink :to="'/contest/judge?contest_path=' + contest.ccf_file"
+                            class="btn btn-square btn-ghost shadow-inner text-base w-1/3">
+                            评测
                         </RouterLink>
                     </div>
                 </div>
