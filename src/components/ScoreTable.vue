@@ -12,7 +12,7 @@
         </thead>
 
         <tbody>
-            <tr v-for="item, index in judging_result" :key="index">
+            <tr v-for="item, index in props.judging_result" :key="index">
                 <th>{{ index }}</th>
                 <td>{{ item.player_order }}</td>
                 <td v-for="
@@ -21,15 +21,28 @@
                     <ProblemScore :problems_result="prob_result" />
                 </td>
             </tr>
+
+            <tr v-if="is_judging">
+                <td colspan="100000" class="font-bold text-center">评测中，请稍后</td>
+            </tr>
         </tbody>
     </table>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
+import { defineProps, PropType } from 'vue';
 import { JudgingResult } from '../types/judging_result';
 import ProblemScore from './ProblemScore.vue';
 
-const props = defineProps(['judging_result'])
-const judging_result = props.judging_result as JudgingResult;
+const props = defineProps({
+    judging_result: {
+        type: Object as PropType<JudgingResult>,
+        required: true
+    },
+    is_judging: {
+        type: Boolean,
+        required: false,
+        default: false
+    }
+})
 </script>

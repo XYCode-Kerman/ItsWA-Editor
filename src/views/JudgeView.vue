@@ -15,14 +15,11 @@
                     <div class="col-span-full divider">评测情况</div>
 
                     <div class="col-span-full">
-                        <div v-if="judging_track_id == undefined && judging_result == undefined">
-                            暂无评测记录。
+                        <div v-if="judging_result == undefined || judging_result.length <= 0">
+                            暂无评测记录
                         </div>
-                        <div v-else-if="judging_track_id != undefined && judging_result == undefined">
-                            评测中。
-                        </div>
-                        <div v-else>
-                            <ScoreTable :judging_result="judging_result" />
+                        <div v-else-if="judging_result.length > 0 && judging_result != undefined ">
+                            <ScoreTable :is_judging="is_judging" :judging_result="judging_result" />
                         </div>
                     </div>
                 </div>
@@ -40,7 +37,7 @@ import Swal from 'sweetalert2';
 import { Ref, onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-const DEBUG = true
+const DEBUG = false
 const route = useRoute();
 // const router = useRouter();
 
@@ -48,6 +45,7 @@ const contest_path = route.query.contest_path
 const ccf: Ref<CCF | undefined> = ref()
 let judging_track_id: Ref<string | undefined> = ref()
 let judging_result: Ref<JudgingResult | undefined> = ref()
+let is_judging: Ref<boolean | undefined> = ref()
 
 onBeforeMount(async () => {
     ccf.value = (await axios.get(`/contest/ccf/?path=${contest_path + '/ccf.json'}`, {
@@ -89,15 +87,24 @@ async function start_judging() {
 
     let counter = 1
     const watcher = setInterval(async () => {
-        const judging_result_resp = await axios.get(`/contest/judge/result/${judging_track_id.value}`, {
-            validateStatus: () => true
-        })
+        const [ judging_result_resp, is_judging_resp ] = await Promise.all([
+            axios.get(`/contest/judge/result/${judging_track_id.value}`, {
+                validateStatus: () => true
+            }),
+            axios.get(`/contest/judge/is_judging/${judging_track_id.value}`, {
+                validateStatus: () => true
+            })
+        ])
+
+        is_judging.value = is_judging_resp.data
 
         if (judging_result_resp.status == 200) {
+            judging_result.value = judging_result_resp.data
+        }
+
+        if (is_judging_resp.data == false) {
             // 终止定时器
             clearInterval(watcher)
-
-            judging_result.value = judging_result_resp.data
         } else if (judging_result_resp.status != 200 && counter % 100 == 0) {
             await Swal.fire({
                 title: '警告',
