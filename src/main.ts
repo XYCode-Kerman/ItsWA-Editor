@@ -8,4 +8,4 @@ import store from './store'
 createApp(App).use(store).use(router).mount('#app')
 
 // dev
-axios.defaults.baseURL = 'http://localhost:2568/'
+axios.defaults.baseURL = `http://${location.hostname}:2568`
