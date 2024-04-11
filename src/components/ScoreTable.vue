@@ -4,21 +4,21 @@
             <tr>
                 <th></th>
                 <th>选手</th>
-                <th v-for="item, index in Object.keys((judging_result as JudgingResult)[0].problems_result)"
-                    :key="index + '114514'">
+                <th v-for="item in Object.keys((judging_result as JudgingResult)[0].problems_result)"
+                    :key="'thead_player_' + item">
                     {{ item }}
                 </th>
             </tr>
         </thead>
 
         <tbody>
-            <tr v-for="item, index in props.judging_result" :key="index">
+            <tr v-for="item, index in props.judging_result" :key="'player_' + item.player_order">
                 <th>{{ index }}</th>
                 <td>{{ item.player_order }}</td>
                 <td v-for="
-            prob_result, prob_index in item.problems_result
-            " :key="prob_index + '1919810'">
-                    <ProblemScore :problems_result="prob_result" />
+            prob_results in item.problems_result
+            " :key="String(prob_results.map(x => x.ckpt.input))">
+                    <ProblemScore :problem_results="prob_results" />
                 </td>
             </tr>
 
